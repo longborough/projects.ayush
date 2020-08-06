@@ -11,6 +11,18 @@ def main():
 # When a game ends, it asks the player whether they want to pla again,
 # returning True if yes and False if no.
 def gPlay(size, name):
+    playing = True
+    while playing:
+        board = [ [f"{x+y+1:3d} " for x in range(0,size)]
+                  for y in range(0,size*size,size) ]
+        pMat(board)
+        board = [ ["    " for x in range(0,size)]
+                  for y in range(0,size*size,size) ]
+        runGame(name, board)
+        playing = False
+    return undefined()
+
+def runGame(name, board):
     return undefined()
 
 def getName(size):
@@ -22,6 +34,10 @@ def getName(size):
     print(f"Hi, {name}! Today we are playing {size} x {size}")
     print(f"Your marker is '{name[0]}'")
     return name
+
+def pMat(matrix):
+    for row in matrix:
+        print(row)
 
 def undefined():
     print("Undefined called")
