@@ -19,7 +19,13 @@ def gPlay(size, name):
         board = [ ["    " for x in range(0,size)]
                   for y in range(0,size*size,size) ]
         runGame(name, board)
-        playing = False
+        while True: 
+            yesno = input("Would you like to play again (y/n)?" ).upper()
+            if yesno in ("Y","YES"):
+                break
+            if yesno in ("N","NO"):
+                playing = False
+                break
     return undefined()
 
 def runGame(name, board):
