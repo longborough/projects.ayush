@@ -1,5 +1,8 @@
 #!python
 
+from sys import exit
+from random import randint
+
 def main():
 # Set up environment
     size = 5
@@ -19,17 +22,51 @@ def gPlay(size, name):
         board = [ ["    " for x in range(0,size)]
                   for y in range(0,size*size,size) ]
         runGame(name, board)
-        while True: 
+        while True:
             yesno = input("Would you like to play again (y/n)?" ).upper()
             if yesno in ("Y","YES"):
                 break
             if yesno in ("N","NO"):
                 playing = False
                 break
-    return undefined()
 
 def runGame(name, board):
-    return undefined()
+    currPos = -1
+    size = len(board)
+    target = size * size + 1
+    mark = f" {name[0]}  "
+    while True:
+        lastPos = currPos
+        throw = randint(1,size+1)
+        currPos += throw
+        print(f"You threw a {throw}.")
+# If still in first row, just place at random
+        if currPos < size + 1:
+            currPos = randint(0,size) + 1
+            print(f"Sorry, still stuck in the start row at position {currPos}.")
+# Check if we hit the target and won
+        elif currPos == target:
+            print(f"Congratulations, {name}, you won!")
+            return
+# Bad luck, we overstepped the end - go backwards instead
+        elif currPos > target:
+            currPos -= 2*throw
+            print(f"Sorry, overshot -- go back to {currPos}.")
+        else:
+            print(f"Looks good -- you're now at position  {currPos}.")
+        board = moveMe(board,size,lastPos,"    ")
+        board = moveMe(board,size,currPos,mark)
+        pMat(board)
+        x = input("Enter for next move, anything else (like q) to quit?: ")
+        if x != "":
+            return
+
+def moveMe(board,size,pos,text):
+    pos -= 1
+    row = pos // size
+    col = pos % size
+    board[row][col] = text
+    return board
 
 def getName(size):
     name = input("Hi! What's your name (enter to stop)?: ")
@@ -44,9 +81,5 @@ def getName(size):
 def pMat(matrix):
     for row in matrix:
         print(row)
-
-def undefined():
-    print("Undefined called")
-    return None
 
 main()
